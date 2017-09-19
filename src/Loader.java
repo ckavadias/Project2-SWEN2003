@@ -55,8 +55,8 @@ public class Loader {
 					pieces = nextLine.split(",");
 					//identifies which form of sprite the line is referring to
 					//and instantiates appropriately
-					float x = Float.parseFloat(pieces[X]);
-					float y = Float.parseFloat(pieces[Y]);
+					int x = Integer.parseInt(pieces[X]);
+					int y = Integer.parseInt(pieces[Y]);
 					
 					maxX = x > maxX ? x : maxX;
 					maxY = y > maxY ? y : maxY;
@@ -67,21 +67,28 @@ public class Loader {
 							allSprites.add(new Player(x, y, xOffset, yOffset));
 							break;
 						case SKELETON:
+							allSprites.add(new Skeleton(x, y, xOffset, yOffset));
 							break;
 						case ROGUE:
+							allSprites.add(new Rogue(x, y, xOffset, yOffset));
 							break;
 						case MAGE:
+							allSprites.add(new Mage(x, y, xOffset, yOffset));
 							break;
 						case STONE:
 							allSprites.add(new Stone(x, y, xOffset, yOffset));
 							break;
 						case ICE:
+							allSprites.add(new Ice(x, y, xOffset, yOffset));
 							break;
 						case TNT:
+							allSprites.add(new TNT(x, y, xOffset, yOffset));
 							break;
 						case DOOR:
+							allSprites.add(new Door(x, y, xOffset, yOffset));
 							break;
 						case SWITCH:
+							allSprites.add(new Switch(x, y, xOffset, yOffset));
 							break;
 						case FLOOR:
 							allSprites.add(new Floor(x, y, xOffset, yOffset));
@@ -90,6 +97,7 @@ public class Loader {
 							allSprites.add(new Wall(x, y, xOffset, yOffset));
 							break;
 						case C_WALL:
+							allSprites.add(new CrackedWall(x, y, xOffset, yOffset));
 							break;
 						case TARGET:
 							allSprites.add(new Target(x, y, xOffset, yOffset));

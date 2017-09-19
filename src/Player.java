@@ -11,11 +11,11 @@ import org.newdawn.slick.SlickException;
 @SuppressWarnings("unused")
 public class Player extends Unit{
 	private final static String IMAGE_SRC = "res/player_left.png";
-	private float lastX;
-	private float lastY;
+	private int lastX;
+	private int lastY;
 
 	
-	public Player(float x, float y, int xOff, int yOff) 
+	public Player(int x, int y, int xOff, int yOff) 
 			throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		this.lastX = getX();
@@ -23,23 +23,20 @@ public class Player extends Unit{
 	}
 	
 	//respond to directional key input
-	public void update(Input input, int delta, ArrayList<Sprite> allWalls) throws Exception {
-		this.lastX = getX();
-		this.lastY = getY();
+	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		
 		if(input.isKeyPressed(Input.KEY_UP)) {
-			setY(getY() - 1);
+			move(Direction.UP, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_DOWN)) {
-			setY(getY() + 1);
+			move(Direction.DOWN, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_LEFT)) {
-			setX(getX() - 1);
+			move(Direction.LEFT, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_RIGHT)) {
-			setX(getX() + 1);
+			move(Direction.RIGHT, gameMap);
 		}
-		checkUpdate(allWalls);
 	}
 	
 	private void checkUpdate(ArrayList<Sprite> allWalls) throws Exception {
@@ -55,17 +52,6 @@ public class Player extends Unit{
 	private void resetPos() throws Exception {
 		setY(this.lastY);
 		setX(this.lastX);
-	}
-	
-	public void render(Graphics g) {
-		//render a sprite on the game board
-		super.render(g);
-	}
-
-	@Override
-	public void move(float x, float y, GameMap map) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

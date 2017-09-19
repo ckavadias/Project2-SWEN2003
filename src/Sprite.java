@@ -13,25 +13,25 @@ import org.newdawn.slick.SlickException;
 public abstract class Sprite {	
 	
 	private Image spriteImage;
-	private float x;
-	private float y;
+	private int x;
+	private int y;
 	private int xOffset;
 	private int yOffset;
 	
 	//takes image_src, x, y from Loader and converts x and y into pixels
 	//also takes a graphical offset to centre rendering 
-	public Sprite(String image_src, float x, float y, int xOff, int yOff) 
+	public Sprite(String image_src, int x, int y, int xOff, int yOff) 
 			throws Exception {
 		this.spriteImage = new Image(image_src);
 		setXOffset(xOff);
 		setYOffset(yOff);
-		setX(x + getXOffset());
-		setY(y + getYOffset());
+		setX(x);
+		setY(y);
 	}
 	
-	//takes x in pixels, confirms is within graphic boundary
-	protected void setX (float x) throws Exception {  
-		if(x < getXOffset() || x > App.COLUMNS - getXOffset()+1) {
+	//takes x in game coordinates, confirms is within graphic boundary
+	protected void setX (int x) throws Exception {  
+		if(x + getXOffset() < getXOffset() || x > App.COLUMNS - getXOffset()+1) {
 			throw new Exception("Invalid grid value");
 		}
 		else {
@@ -39,9 +39,9 @@ public abstract class Sprite {
 		}
 	}
 	
-	//takes y in pixels, confirms is within graphic boundary
-	protected void setY(float y) throws Exception {
-		if(y < getYOffset() ||  y > App.ROWS - getYOffset() +1) {
+	//takes y in game coordinates, confirms is within graphic boundary
+	protected void setY(int y) throws Exception {
+		if(y + getYOffset() < getYOffset() ||  y > App.ROWS - getYOffset() +1) {
 			throw new Exception("Invalid grid value");
 		}
 		else {
@@ -49,11 +49,11 @@ public abstract class Sprite {
 		}
 	}
 	
-	public float getX() {
+	public int getX() {
 		return this.x;
 	}
 	
-	public float getY() {
+	public int getY() {
 		return this.y;
 	}
 	
@@ -91,6 +91,7 @@ public abstract class Sprite {
 		//render a sprite on the game board, centering the sprite makes comparing closeness
 		//in the isCloseTo method mathematically simpler and a better centering of the overall
 		//graphics when using the stored offsets
-		this.spriteImage.drawCentered(this.x*App.TILE_SIZE, this.y*App.TILE_SIZE);
+		this.spriteImage.drawCentered((this.x + this.xOffset)*App.TILE_SIZE, 
+				(this.y+this.yOffset)*App.TILE_SIZE);
 	}
 }

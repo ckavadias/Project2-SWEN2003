@@ -10,10 +10,14 @@ import org.newdawn.slick.SlickException;
 public class Wall extends Tile {
 	private final static String IMAGE_SRC = "res/wall.png";
 	
-	public Wall(float x, float y, int xOff, int yOff) throws Exception {
+	public Wall(int x, int y, int xOff, int yOff) throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 	}
-
+	
+	public Wall(String image_src, int x, int y, int xOff, int yOff) throws Exception {
+		super(image_src, x, y, xOff, yOff);
+	}
+	
 	public boolean isBlocking() {
 		return true;
 	}
