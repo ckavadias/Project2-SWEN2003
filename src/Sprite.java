@@ -94,4 +94,9 @@ public abstract class Sprite {
 		this.spriteImage.drawCentered((this.x + this.xOffset)*App.TILE_SIZE, 
 				(this.y+this.yOffset)*App.TILE_SIZE);
 	}
+
+	public Sprite copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

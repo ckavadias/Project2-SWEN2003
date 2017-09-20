@@ -11,47 +11,42 @@ import org.newdawn.slick.SlickException;
 @SuppressWarnings("unused")
 public class Player extends Unit{
 	private final static String IMAGE_SRC = "res/player_left.png";
-	private int lastX;
-	private int lastY;
+	private int numMoves = 0;
 
 	
 	public Player(int x, int y, int xOff, int yOff) 
 			throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
-		this.lastX = getX();
-		this.lastY = getY();
 	}
 	
 	//respond to directional key input
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
+		boolean moved = false;
 		
 		if(input.isKeyPressed(Input.KEY_UP)) {
-			move(Direction.UP, gameMap);
+			moved = move(Direction.UP, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_DOWN)) {
-			move(Direction.DOWN, gameMap);
+			moved = move(Direction.DOWN, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_LEFT)) {
-			move(Direction.LEFT, gameMap);
+			moved = move(Direction.LEFT, gameMap);
 		}
 		else if(input.isKeyPressed(Input.KEY_RIGHT)) {
-			move(Direction.RIGHT, gameMap);
+			moved = move(Direction.RIGHT, gameMap);
+		}
+	
+		if(moved) {
+		this.numMoves++;
 		}
 	}
 	
-	private void checkUpdate(ArrayList<Sprite> allWalls) throws Exception {
-		//determine if a player is too close to any walls by updating position and
-		//terminate update if so
-		for (Sprite thisWall : allWalls) {
-			if (isCloseTo(thisWall)) {
-				resetPos();
-				return;
-			}
-		}
+	public void render(Graphics g) {
+		g.drawString("Number of moves: " + this.numMoves, 0, 0);
+		super.render(g);
 	}
-	private void resetPos() throws Exception {
-		setY(this.lastY);
-		setX(this.lastX);
+	public int getNumMoves() {
+		return this.numMoves;
 	}
 
 }

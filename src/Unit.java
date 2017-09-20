@@ -10,7 +10,7 @@ public abstract class Unit extends GameObject {
 	
 	public abstract void update(Input input, float delta, GameMap gameMap) throws Exception;
 	
-	public void move(Direction direction, GameMap gameMap) throws Exception {
+	public boolean move(Direction direction, GameMap gameMap) throws Exception {
 		int newX = 0, newY = 0;
 		
 		//choose the new x and y values based on direction
@@ -37,7 +37,9 @@ public abstract class Unit extends GameObject {
 			setX(newX);
 			setY(newY);
 			gameMap.putInCell(newX, newY, this);
+			return true;
 		}
+		return false;
 	}
 	
 	//check that the proposed move is valid given the game state and propagate

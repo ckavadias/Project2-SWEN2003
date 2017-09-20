@@ -9,9 +9,9 @@ public class Rogue extends Unit {
 	}
 
 	@Override
-	public void move(Direction direction, GameMap map) {
+	public boolean move(Direction direction, GameMap map) {
 		// TODO Auto-generated method stub
-
+		return false;
 	}
 
 	@Override
