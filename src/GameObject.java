@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-
 import org.newdawn.slick.Input;
+
 
 public abstract class GameObject extends Sprite {
 	public enum Direction {LEFT, RIGHT, UP, DOWN};
@@ -10,5 +10,5 @@ public abstract class GameObject extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public abstract boolean isValidMove(int x, int y, Direction direction, GameMap gameMap);
+	public abstract boolean isValidMove(int x, int y, Direction direction, GameMap gameMap) throws Exception;
 }

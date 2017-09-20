@@ -13,7 +13,7 @@ public class MapCell {
 	 * @return the object
 	 */
 	public GameObject getObject() {
-		return object;
+		return this.object;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class MapCell {
 	 * @return the tile
 	 */
 	public Tile getTile() {
-		return tile;
+		return this.tile;
 	}
 
 	/**

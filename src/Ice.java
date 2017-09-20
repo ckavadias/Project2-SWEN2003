@@ -7,4 +7,10 @@ public class Ice extends Block {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public boolean push(Direction direction, GameMap gameMap) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -8,6 +8,8 @@ public abstract class Unit extends GameObject {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public abstract void update(Input input, float delta, GameMap gameMap) throws Exception;
+	
 	public void move(Direction direction, GameMap gameMap) throws Exception {
 		int newX = 0, newY = 0;
 		
@@ -31,16 +33,16 @@ public abstract class Unit extends GameObject {
 				break;
 		}
 		if (isValidMove(newX,newY,direction, gameMap)) {
+			gameMap.putInCell(getX(), getY(), (GameObject)null);
 			setX(newX);
 			setY(newY);
+			gameMap.putInCell(newX, newY, this);
 		}
-		return;
 	}
-	public abstract void update(Input input, float delta, GameMap gameMap) throws Exception;
 	
 	//check that the proposed move is valid given the game state and propagate
 	//to other gameObjects where needed
-	public boolean isValidMove(int x, int y,Direction direction, GameMap gameMap) {
+	public boolean isValidMove(int x, int y,Direction direction, GameMap gameMap) throws Exception {
 		boolean isValid = false;
 		switch(gameMap.isCellBlocked(x,y)) {
 			case NO:
@@ -48,7 +50,7 @@ public abstract class Unit extends GameObject {
 				isValid = true;
 				break;
 			case BLOCK:
-				isValid = gameMap.getBlock(x,y).push(direction);
+				isValid = gameMap.pushBlock(x,y, direction);
 				break;
 			case WALL:
 				break;
