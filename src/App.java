@@ -73,7 +73,12 @@ public class App extends BasicGame
     public void render(GameContainer gc, Graphics g)
     throws SlickException
     {
-    	world.render(g);
+    	try {
+			world.render(g);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /** Start-up method. Creates the game and runs it.
