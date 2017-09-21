@@ -7,4 +7,11 @@ public class CrackedWall extends Wall {
 		// TODO Auto-generated constructor stub
 	}
 
+	public CrackedWall(CrackedWall thatSprite) throws Exception {
+		super(thatSprite);
+	}
+
+	public Sprite copy() throws Exception {
+		return new CrackedWall(this);
+	}
 }

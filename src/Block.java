@@ -23,6 +23,7 @@ public abstract class Block extends GameObject {
 				isValid = gameMap.pushBlock(x,y, direction);
 				break;
 			case UNIT:
+			case C_WALL:
 			case WALL:
 				break;
 		}

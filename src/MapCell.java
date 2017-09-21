@@ -36,11 +36,6 @@ public class MapCell {
 	public void setTile(Tile tile) {
 		this.tile = tile;
 	}
-
-	public void setGameObject(GameObject object) {
-		this.object = object;
-		
-	}
 	
 
 }

@@ -5,16 +5,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class GameMap {
-	public static enum Stopper {WALL, UNIT, BLOCK, NO};
+	public static enum Stopper {WALL, C_WALL, UNIT, BLOCK, NO};
 	private int onTargets = 0;
 	private int numTargets;
+	private int numMoves = 0;
 	private MapCell[][] gameMap;
-	private Player player;
-	private Skeleton skeleton;
-	private Rogue rogue;
-	private Mage mage;
-	private ArrayList<Ice> iceBlocks;
-	protected ArrayList<Sprite> allSprites;
+	private ArrayList<Sprite> allSprites;
+	private ArrayList<Sprite> removalList = new ArrayList<Sprite>();
+	private ArrayList<Sprite> addList = new ArrayList<Sprite>();
 	
 	public GameMap(ArrayList<Sprite> allSprites) {
 		this.allSprites = allSprites;
@@ -35,11 +33,15 @@ public class GameMap {
 		initialiseMap(this.allSprites);
 		loadMap(this.allSprites);
 		
+		this.numMoves = gameMap.getNumMoves();
 		this.onTargets = gameMap.getOnTargets();
 	}
 	
 	public Stopper isCellBlocked (int x, int y){
 		if(gameMap[x][y].getTile().isBlocking()) {
+			if(gameMap[x][y].getTile() instanceof CrackedWall) {
+				return Stopper.C_WALL;
+			}
 			return Stopper.WALL;
 		}
 		else if (gameMap[x][y].getObject() instanceof Block) {
@@ -63,7 +65,7 @@ public class GameMap {
 				incrementOnTarget();
 			}
 		}
-		gameMap[x][y].setGameObject((GameObject)object);
+		gameMap[x][y].setObject((GameObject)object);
 	}
 	
 	//initialise and empty gameMap to be filled
@@ -84,30 +86,13 @@ public class GameMap {
 	//insert all sprites into Map and determine which are units and ice
 	private void loadMap(ArrayList<Sprite> allSprites) {
 		int numTargets = 0;
-		this.iceBlocks = new ArrayList<Ice>();
 		
 		for (Sprite thisSprite : allSprites) {
 			putInCell(thisSprite.getX(), thisSprite.getY(), thisSprite);
-			if (thisSprite instanceof Player) {
-				this.player = (Player)thisSprite;
-			}
-			else if (thisSprite instanceof Skeleton) {
-				this.skeleton = (Skeleton)thisSprite;
-			}
-			else if (thisSprite instanceof Mage) {
-				this.mage = (Mage)thisSprite;
-			}
-			else if (thisSprite instanceof Rogue) {
-				this.rogue = (Rogue)thisSprite;
-			}
-			else if (thisSprite instanceof Ice) {
-				this.iceBlocks.add((Ice)thisSprite);
-			}
-			else if (thisSprite instanceof Target) {
+			if (thisSprite instanceof Target) {
 				numTargets++;
 			}
 		}
-		this.iceBlocks.trimToSize();
 		this.numTargets = numTargets;
 	}
 	
@@ -116,10 +101,20 @@ public class GameMap {
 	}
 	
 	public void update (Input input, float delta) throws Exception{
-		this.player.update(input, delta, this);
+		for(Sprite thisSprite : this.allSprites) {
+			thisSprite.update(input, delta, this);
+		}
+		if(this.removalList.size() > 0) {
+			this.allSprites.removeAll(this.removalList);
+			this.removalList.clear();
+		}
+		if(this.addList.size() > 0) {
+			this.allSprites.addAll(this.addList);
+			this.addList.clear();
+		}
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g) throws SlickException {
 		for (Sprite thisSprite : this.allSprites) {
 			thisSprite.render(g);
 		}
@@ -137,11 +132,24 @@ public class GameMap {
 		return this.onTargets;
 	}
 	
+	public void incrementNumMoves() {
+		this.numMoves++;
+	} 
+	
 	public boolean winState() {
 		return this.numTargets == this.onTargets;
 	}
 
 	public int getNumMoves() {
-		return this.player.getNumMoves();
+		return this.numMoves;
+	}
+	public void removeSprite(Sprite thisSprite) {
+		this.gameMap[thisSprite.getX()][thisSprite.getY()].setObject(null);
+		this.removalList.add(thisSprite);
+		
+	}
+	public void addSprite(Sprite thisSprite) {
+		this.addList.add(thisSprite);
+		
 	}
 }

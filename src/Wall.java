@@ -21,7 +21,7 @@ public class Wall extends Tile {
 	public Wall(Wall thatSprite) throws Exception{
 		super(thatSprite);
 	}
-	public Wall copy() throws Exception{
+	public Sprite copy() throws Exception{
 		return new Wall(this);
 	}
 	public boolean isBlocking() {

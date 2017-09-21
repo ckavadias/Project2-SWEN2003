@@ -11,30 +11,14 @@ public abstract class Unit extends GameObject {
 	public Unit(Unit thatSprite) throws Exception {
 		super(thatSprite);
 	}
-	public abstract void update(Input input, float delta, GameMap gameMap) throws Exception;
 	
 	public boolean move(Direction direction, GameMap gameMap) throws Exception {
 		int newX = 0, newY = 0;
 		
 		//choose the new x and y values based on direction
-		switch(direction){
-			case UP:
-				newX = getX();
-				newY = getY() - 1;
-				break;
-			case DOWN:
-				newX = getX();
-				newY = getY() + 1;
-				break;
-			case LEFT:
-				newX = getX() - 1;
-				newY = getY();
-				break;
-			case RIGHT:
-				newX = getX() + 1;
-				newY = getY();
-				break;
-		}
+		newX = findNewX(direction);
+		newY = findNewY(direction);
+		
 		if (isValidMove(newX,newY,direction, gameMap)) {
 			gameMap.putInCell(getX(), getY(), (GameObject)null);
 			setX(newX);
@@ -57,6 +41,7 @@ public abstract class Unit extends GameObject {
 			case BLOCK:
 				isValid = gameMap.pushBlock(x,y, direction);
 				break;
+			case C_WALL:
 			case WALL:
 				break;
 		}

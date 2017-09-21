@@ -100,7 +100,7 @@ public abstract class Sprite {
 		return false;
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g) throws SlickException {
 		//render a sprite on the game board, centering the sprite makes comparing closeness
 		//in the isCloseTo method mathematically simpler and a better centering of the overall
 		//graphics when using the stored offsets
@@ -109,4 +109,8 @@ public abstract class Sprite {
 	}
 
 	public abstract Sprite copy() throws Exception;
+
+	public void update(Input input, float delta, GameMap gameMap) throws Exception {
+		// TODO Auto-generated method stub
+	}
 }

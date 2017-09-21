@@ -42,10 +42,11 @@ public class Player extends Unit{
 	
 		if(moved) {
 			this.numMoves++;
+			gameMap.incrementNumMoves();
 		}
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g) throws SlickException {
 		g.drawString("Number of moves: " + this.numMoves, 0, 0);
 		super.render(g);
 	}

@@ -13,6 +13,32 @@ public abstract class GameObject extends Sprite {
 	public GameObject(GameObject thatSprite) throws Exception {
 		super(thatSprite);
 	}
+	
+	//determine what x and y should be based on the travel direction
+	@SuppressWarnings("unused")
+	public int findNewX(Direction direction) {
+		switch(direction){
+			case LEFT:
+				return getX() - 1;
+			case RIGHT:
+				return getX() + 1;
+			default:
+				return getX();
+		}
+	}
+		
+	@SuppressWarnings("unused")
+	public int findNewY(Direction direction) {
+		switch(direction){
+			case UP:
+				return getY() - 1;
+			case DOWN:
+				return getY() + 1;
+			default:
+				return getY();
+
+		}
+	}
 
 	public abstract boolean isValidMove(int x, int y, Direction direction, GameMap gameMap) throws Exception;
 }
