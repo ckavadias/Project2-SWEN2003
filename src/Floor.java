@@ -12,7 +12,13 @@ public class Floor extends Tile {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+
+	public Floor(Floor thatSprite) throws Exception {
+		super(thatSprite);
+	}
+	public Floor copy() throws Exception {
+		return new Floor(this);
+	}
 	public boolean isBlocking() {
 		// TODO Auto-generated method stub
 		return false;

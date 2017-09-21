@@ -13,7 +13,15 @@ public class Mage extends Unit {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public Mage(Mage thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Mage copy() throws Exception{
+		return new Mage(this);
+	}
+	
 	@Override
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		// TODO Auto-generated method stub

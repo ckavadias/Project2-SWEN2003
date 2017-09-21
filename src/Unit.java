@@ -8,6 +8,9 @@ public abstract class Unit extends GameObject {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Unit(Unit thatSprite) throws Exception {
+		super(thatSprite);
+	}
 	public abstract void update(Input input, float delta, GameMap gameMap) throws Exception;
 	
 	public boolean move(Direction direction, GameMap gameMap) throws Exception {

@@ -29,6 +29,19 @@ public abstract class Sprite {
 		setY(y);
 	}
 	
+	public Sprite(Sprite thatSprite) throws Exception {
+		setX(thatSprite.getX());
+		setY(thatSprite.getY());
+		setXOffset(thatSprite.getXOffset());
+		setYOffset(thatSprite.getYOffset());
+		this.spriteImage = thatSprite.getSpriteImage();
+	}
+	
+	private Image getSpriteImage() throws SlickException {
+		// TODO Auto-generated method stub
+		return new Image(this.spriteImage.getResourceReference());
+	}
+
 	//takes x in game coordinates, confirms is within graphic boundary
 	protected void setX (int x) throws Exception {  
 		if(x + getXOffset() < getXOffset() || x > App.COLUMNS - getXOffset()+1) {
@@ -95,8 +108,5 @@ public abstract class Sprite {
 				(this.y+this.yOffset)*App.TILE_SIZE);
 	}
 
-	public Sprite copy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Sprite copy() throws Exception;
 }

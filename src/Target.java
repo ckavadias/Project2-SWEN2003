@@ -6,6 +6,13 @@ public class Target extends Floor {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public Target(Target thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Target copy() throws Exception{
+		return new Target(this);
+	}
 
 }

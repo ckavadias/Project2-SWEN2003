@@ -6,7 +6,14 @@ public class Door extends Tile {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public Door(Door thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Door copy() throws Exception{
+		return new Door(this);
+	}
 	@Override
 	public boolean isBlocking() {
 		// TODO Auto-generated method stub

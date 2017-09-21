@@ -6,7 +6,13 @@ public class Switch extends Tile {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
-
+	public Switch(Switch thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Switch copy() throws Exception{
+		return new Switch(this);
+	}
 	@Override
 	public boolean isBlocking() {
 		// TODO Auto-generated method stub

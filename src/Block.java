@@ -6,6 +6,10 @@ public abstract class Block extends GameObject {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Block(Block thatSprite) throws Exception {
+		super(thatSprite);
+	}
+
 	//pass a directional instruction to an adjacent block
 	public abstract boolean push(Direction direction, GameMap gameMap) throws Exception;
 	

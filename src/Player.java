@@ -19,6 +19,10 @@ public class Player extends Unit{
 		super(IMAGE_SRC, x, y, xOff, yOff);
 	}
 	
+	public Player(Player thatSprite) throws Exception {
+		super(thatSprite);
+		this.numMoves = thatSprite.getNumMoves();
+	}
 	//respond to directional key input
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		boolean moved = false;
@@ -37,7 +41,7 @@ public class Player extends Unit{
 		}
 	
 		if(moved) {
-		this.numMoves++;
+			this.numMoves++;
 		}
 	}
 	
@@ -47,6 +51,11 @@ public class Player extends Unit{
 	}
 	public int getNumMoves() {
 		return this.numMoves;
+	}
+	
+	@Override
+	public Sprite copy() throws Exception {
+		return new Player(this);
 	}
 
 }

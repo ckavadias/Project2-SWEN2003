@@ -7,7 +7,15 @@ public class Skeleton extends Unit {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public Skeleton(Skeleton thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Skeleton copy() throws Exception{
+		return new Skeleton(this);
+	}
+	
 	@Override
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		// TODO Auto-generated method stub

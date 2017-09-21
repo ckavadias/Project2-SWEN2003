@@ -10,6 +10,9 @@ public class Stone extends Block {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Stone(Stone thatSprite) throws Exception {
+		super(thatSprite);
+	}
 	public boolean push(Direction direction, GameMap gameMap) throws Exception {
 		int newX = 0, newY = 0;
 		
@@ -40,5 +43,9 @@ public class Stone extends Block {
 			return true;
 		}
 		return false;
+	}
+	@Override
+	public Sprite copy() throws Exception {
+		return new Stone(this);
 	}
 }

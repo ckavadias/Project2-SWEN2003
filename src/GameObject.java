@@ -10,5 +10,9 @@ public abstract class GameObject extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public GameObject(GameObject thatSprite) throws Exception {
+		super(thatSprite);
+	}
+
 	public abstract boolean isValidMove(int x, int y, Direction direction, GameMap gameMap) throws Exception;
 }

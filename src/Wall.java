@@ -18,6 +18,12 @@ public class Wall extends Tile {
 		super(image_src, x, y, xOff, yOff);
 	}
 	
+	public Wall(Wall thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	public Wall copy() throws Exception{
+		return new Wall(this);
+	}
 	public boolean isBlocking() {
 		return true;
 	}

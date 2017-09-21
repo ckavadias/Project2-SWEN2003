@@ -13,7 +13,15 @@ public class Rogue extends Unit {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public Rogue(Rogue thatSprite) throws Exception{
+		super(thatSprite);
+	}
+	
+	public Rogue copy() throws Exception{
+		return new Rogue(this);
+	}
+	
 	@Override
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		// TODO Auto-generated method stub

@@ -22,7 +22,7 @@ public class GameMap {
 		//insert all sprites into Map
 		loadMap(this.allSprites);
 	}
-	public GameMap(GameMap gameMap) {
+	public GameMap(GameMap gameMap) throws Exception {
 		this.allSprites = new ArrayList<Sprite>();
 		
 		//copy the list of sprites

@@ -6,6 +6,10 @@ public abstract class Tile extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Tile(Tile thatSprite) throws Exception {
+		super(thatSprite);
+	}
+	
 	public abstract boolean isBlocking();
-
+	
 }
