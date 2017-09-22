@@ -26,7 +26,7 @@ public class Player extends Unit{
 	//respond to directional key input
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		boolean moved = false;
-		
+		gameMap.resetMove();
 		if(input.isKeyPressed(Input.KEY_UP)) {
 			moved = move(Direction.UP, gameMap);
 		}

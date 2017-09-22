@@ -2,16 +2,11 @@ import org.newdawn.slick.Input;
 
 public class Rogue extends Unit {
 	private final static String IMAGE_SRC = "res/rogue.png";
+	private Direction currentDirection = Direction.LEFT;
 	
 	public Rogue(int x, int y, int xOff, int yOff) throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public boolean move(Direction direction, GameMap map) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public Rogue(Rogue thatSprite) throws Exception{
@@ -22,9 +17,24 @@ public class Rogue extends Unit {
 		return new Rogue(this);
 	}
 	
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
-		// TODO Auto-generated method stub
+		if(!gameMap.moveWasMade()) {
+			return;
+		}
+		if(!move(this.currentDirection, gameMap)){
+			//System.out.println("ROGUE");
+			switch (this.currentDirection) {
+				case LEFT:
+					this.currentDirection = GameObject.Direction.RIGHT;
+					break;
+				case RIGHT:
+					this.currentDirection = GameObject.Direction.LEFT;
+					break;
+			}
+			move(currentDirection, gameMap);
+		}
 		
 	}
 

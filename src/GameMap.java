@@ -9,6 +9,7 @@ public class GameMap {
 	private int onTargets = 0;
 	private int numTargets;
 	private int numMoves = 0;
+	private boolean moveMade = false;
 	private boolean explosion = false;
 	private MapCell[][] gameMap;
 	private ArrayList<Sprite> allSprites;
@@ -151,6 +152,7 @@ public class GameMap {
 	}
 	
 	public void incrementNumMoves() {
+		this.moveMade = true;
 		this.numMoves++;
 	} 
 	
@@ -189,5 +191,13 @@ public class GameMap {
 	
 	public boolean exploded() {
 		return this.explosion;
+	}
+	
+	public boolean moveWasMade() {
+		return this.moveMade;
+	}
+	
+	public void resetMove() {
+		this.moveMade = false;
 	}
 }

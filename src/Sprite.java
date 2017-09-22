@@ -117,4 +117,5 @@ public abstract class Sprite {
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		// TODO Auto-generated method stub
 	}
+
 }

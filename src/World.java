@@ -12,7 +12,6 @@ import org.newdawn.slick.SlickException;
 @SuppressWarnings("unused")
 public class World {	
 	private final int MAX_LEVEL = 5;
-	private final int START = 0;
 	private final String DIR = "res/levels/";
 	private final String EXT = ".lvl";
 	private GameMap gameMap;
@@ -25,7 +24,7 @@ public class World {
 				}
 			});
 	
-	private int currentLevel = 1;
+	private int currentLevel = 3;
 	private int numMoves = 0;
 	private Player player;
 	
