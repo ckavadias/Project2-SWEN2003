@@ -12,8 +12,9 @@ public class TNT extends Stone {
 	
 	//called when an explosion is triggered, creates the explosion sprite to be rendered and removes itself
 	//from the gameMap so that it can't interfere with future game play
-	private void explode(GameMap gameMap) throws Exception {
+	private void explode(GameMap gameMap, Direction direction) throws Exception {
 		gameMap.removeSprite(this);
+		gameMap.explode(findNewX(direction), findNewY(direction));
 		gameMap.addSprite(new Explosion(getX(),getY(), getXOffset(), getYOffset()));
 		
 	}
@@ -21,7 +22,7 @@ public class TNT extends Stone {
 	public boolean push(Direction direction, GameMap gameMap) throws Exception {
 		if(!super.push(direction, gameMap)) {
 			if(gameMap.isCellBlocked(findNewX(direction), findNewY(direction)) == GameMap.Stopper.C_WALL) {
-				explode(gameMap);
+				explode(gameMap, direction);
 			}
 			return false;
 		}

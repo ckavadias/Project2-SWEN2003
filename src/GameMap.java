@@ -9,6 +9,7 @@ public class GameMap {
 	private int onTargets = 0;
 	private int numTargets;
 	private int numMoves = 0;
+	private boolean explosion = false;
 	private MapCell[][] gameMap;
 	private ArrayList<Sprite> allSprites;
 	private ArrayList<Sprite> removalList = new ArrayList<Sprite>();
@@ -25,7 +26,9 @@ public class GameMap {
 		
 		//copy the list of sprites
 		for (Sprite thatSprite : gameMap.allSprites) {
-			this.allSprites.add(thatSprite.copy());
+			if(!(thatSprite instanceof Explosion)) {
+				this.allSprites.add(thatSprite.copy());
+			}
 		}
 		
 		//reconstruct the map
@@ -37,6 +40,7 @@ public class GameMap {
 		this.onTargets = gameMap.getOnTargets();
 	}
 	
+	//determine if and how a cell is blocked and communicate to calling class
 	public Stopper isCellBlocked (int x, int y){
 		if(gameMap[x][y].getTile().isBlocking()) {
 			if(gameMap[x][y].getTile() instanceof CrackedWall) {
@@ -68,7 +72,7 @@ public class GameMap {
 		gameMap[x][y].setObject((GameObject)object);
 	}
 	
-	//initialise and empty gameMap to be filled
+	//initialise an empty gameMap to be filled
 	private void initialiseMap(ArrayList<Sprite> allSprites){
 		int x = (allSprites.get(0).getXOffset()*-2) + App.COLUMNS;
 		int y = (allSprites.get(0).getYOffset()*-2) + App.ROWS;
@@ -83,12 +87,14 @@ public class GameMap {
 		}
 	}
 	
-	//insert all sprites into Map and determine which are units and ice
+	//insert all sprites into Map and count number of targets
 	private void loadMap(ArrayList<Sprite> allSprites) {
 		int numTargets = 0;
 		
 		for (Sprite thisSprite : allSprites) {
-			putInCell(thisSprite.getX(), thisSprite.getY(), thisSprite);
+			if(!(thisSprite instanceof Explosion)) {
+				putInCell(thisSprite.getX(), thisSprite.getY(), thisSprite);
+			}
 			if (thisSprite instanceof Target) {
 				numTargets++;
 			}
@@ -96,21 +102,32 @@ public class GameMap {
 		this.numTargets = numTargets;
 	}
 	
+	//allow a GameObject to relay a push command to a block
 	public boolean pushBlock(int x, int y, GameObject.Direction direction) throws Exception {
 		return ((Block)this.gameMap[x][y].getObject()).push(direction, this);
 	}
 	
+	//relay game updates to all sprites and also update list where necessary
 	public void update (Input input, float delta) throws Exception{
+		boolean change = false;
 		for(Sprite thisSprite : this.allSprites) {
 			thisSprite.update(input, delta, this);
 		}
 		if(this.removalList.size() > 0) {
 			this.allSprites.removeAll(this.removalList);
 			this.removalList.clear();
+			change = true;
 		}
 		if(this.addList.size() > 0) {
 			this.allSprites.addAll(this.addList);
 			this.addList.clear();
+			
+		}
+		//may need to refactor map where changes to the sprites have been made
+		if(change) {
+			System.out.println("REFACTOR");
+			initialiseMap(this.allSprites);
+			loadMap(this.allSprites);
 		}
 	}
 	
@@ -118,6 +135,7 @@ public class GameMap {
 		for (Sprite thisSprite : this.allSprites) {
 			thisSprite.render(g);
 		}
+		g.drawString("Number of moves: " + getNumMoves(), 0, 0);
 	}
 	
 	private void incrementOnTarget() {
@@ -136,6 +154,7 @@ public class GameMap {
 		this.numMoves++;
 	} 
 	
+	//determine if all targets have been covered
 	public boolean winState() {
 		return this.numTargets == this.onTargets;
 	}
@@ -143,13 +162,27 @@ public class GameMap {
 	public int getNumMoves() {
 		return this.numMoves;
 	}
+	
+	//list a sprite for removal during next update run
 	public void removeSprite(Sprite thisSprite) {
-		this.gameMap[thisSprite.getX()][thisSprite.getY()].setObject(null);
 		this.removalList.add(thisSprite);
 		
 	}
+	
+	//list a sprite for addition during the next update run
 	public void addSprite(Sprite thisSprite) {
 		this.addList.add(thisSprite);
 		
+	}
+	
+	//change gameMap state to notify of an explosion
+	public void explode(int x, int y) {
+		removeSprite(this.gameMap[x][y].getTile());
+		//this.explosion = true;
+		incrementNumMoves();
+		
+	}
+	public boolean exploded() {
+		return this.explosion;
 	}
 }

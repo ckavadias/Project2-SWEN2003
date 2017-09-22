@@ -16,6 +16,7 @@ public class World {
 	private final String DIR = "res/levels/";
 	private final String EXT = ".lvl";
 	private GameMap gameMap;
+	private GameMap initialMap;
 	
 	private PriorityQueue<GameMap> pastStates = new PriorityQueue<GameMap>(
 			new Comparator<GameMap>() {
@@ -29,11 +30,10 @@ public class World {
 	private Player player;
 	
 	//loads in all sprites available from the level while also creating 
-	//more specific lists for the moment just walls to aid in updating
 	public World() throws Exception {
-		//load sprites from csv file and identify player
-		this.pastStates.add(new GameMap(loadLevel()));
-		this.gameMap = new GameMap(pastStates.peek());
+		//initialise gameMap from loaded sprites
+		this.initialMap = new GameMap(loadLevel());
+		restartLevel();
 	}
 	
 	public void update(Input input, int delta) throws Exception {
@@ -47,6 +47,11 @@ public class World {
 				restartLevel();
 			}
 			//execute all other moves
+			else if(this.gameMap.exploded()) {
+				for (GameMap thisMap : pastStates) {
+					
+				}
+			}
 			else{
 				this.gameMap.update(input, delta);
 				recordState();
@@ -58,14 +63,13 @@ public class World {
 		gameMap.render(g);
 		if(gameMap.winState() && currentLevel < MAX_LEVEL) {
 			currentLevel = currentLevel < MAX_LEVEL ? currentLevel + 1 : currentLevel;
-			this.pastStates.clear();
-			this.pastStates.add(new GameMap(loadLevel()));
+			this.initialMap = new GameMap(loadLevel());
 			restartLevel();
 		}
 	}
 	
+	//retrieve loaded sprites
 	private ArrayList<Sprite> loadLevel() throws Exception {
-		System.out.println("Loading");
 		return Loader.loadSprites(DIR + currentLevel + EXT);
 	}
 	
@@ -78,6 +82,8 @@ public class World {
 		}
 	}
 	
+	//undo the most recent move, unless an explosion has taken place, only undo up to the move after
+	//the explosion (this is a variation from the spec)
 	private void undoMove() throws Exception {
 		if (this.pastStates.size() > 1) {
 			this.pastStates.poll();
@@ -86,11 +92,11 @@ public class World {
 		}
 	}
 	
+	//restore the level to it's starting state
 	private void restartLevel() throws Exception {
-		while (pastStates.size() > 1) {
-			pastStates.poll();
-		}
-		this.gameMap = new GameMap(pastStates.peek());
+		pastStates.clear();
+		pastStates.add(new GameMap(this.initialMap));
+		this.gameMap = new GameMap(this.initialMap);
 		this.numMoves = 0;
 		
 	}

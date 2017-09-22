@@ -1,4 +1,6 @@
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 public class Explosion extends Sprite {
 	private final static String IMAGE_SRC = "res/explosion.png";
@@ -6,7 +8,7 @@ public class Explosion extends Sprite {
 	private float timeSinceBang = 0f;
 	
 	public Explosion(int x, int y, int xOff, int yOff) throws Exception {
-		super(IMAGE_SRC, x, y, xOff, yOff);
+		super(IMAGE_SRC, x -1, y -1, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -21,7 +23,7 @@ public class Explosion extends Sprite {
 			gameMap.removeSprite(this);
 		}
 	}
-
+	
 	@Override
 	public Sprite copy() throws Exception {
 		// TODO Auto-generated method stub

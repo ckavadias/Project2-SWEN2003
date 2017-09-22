@@ -86,6 +86,13 @@ public abstract class Sprite {
 		return this.yOffset;
 	}
 	
+	public int getXScreen() {
+		return (this.x + this.xOffset)*App.TILE_SIZE;
+	}
+	
+	public int getYScreen() {
+		return (this.y+this.yOffset)*App.TILE_SIZE;
+	}
 	//this has been included in the Sprite class as expansions of the game in which
 	//blocks can be move will require this functionality in more than just the player
 	public boolean isCloseTo(Sprite otherSprite) {
@@ -101,11 +108,8 @@ public abstract class Sprite {
 	}
 	
 	public void render(Graphics g) throws SlickException {
-		//render a sprite on the game board, centering the sprite makes comparing closeness
-		//in the isCloseTo method mathematically simpler and a better centering of the overall
-		//graphics when using the stored offsets
-		this.spriteImage.drawCentered((this.x + this.xOffset)*App.TILE_SIZE, 
-				(this.y+this.yOffset)*App.TILE_SIZE);
+		//render a sprite on the game board
+		this.spriteImage.draw(getXScreen(), getYScreen());
 	}
 
 	public abstract Sprite copy() throws Exception;

@@ -1,3 +1,6 @@
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class CrackedWall extends Wall {
 	private final static String IMAGE_SRC = "res/cracked_wall.png";
@@ -14,4 +17,10 @@ public class CrackedWall extends Wall {
 	public Sprite copy() throws Exception {
 		return new CrackedWall(this);
 	}
+
+	public void explode(GameMap gameMap) {
+		gameMap.removeSprite(this);
+		
+	}
+	
 }
