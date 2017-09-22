@@ -11,7 +11,22 @@ public abstract class Block extends GameObject {
 	}
 
 	//pass a directional instruction to an adjacent block
-	public abstract boolean push(Direction direction, GameMap gameMap) throws Exception;
+	public boolean push(Direction direction, GameMap gameMap) throws Exception {
+		int newX = 0, newY = 0;
+		
+		//choose the new x and y values based on direction
+		newX = findNewX(direction);
+		newY = findNewY(direction);
+		
+		if (isValidMove(newX,newY,direction, gameMap)) {
+			gameMap.putInCell(getX(), getY(), (GameObject)null);
+			setX(newX);
+			setY(newY);
+			gameMap.putInCell(newX, newY, this);
+			return true;
+		}
+		return false;
+	}
 	
 	public boolean isValidMove(int x, int y, Direction direction, GameMap gameMap) throws Exception{
 		boolean isValid = false;
