@@ -48,9 +48,9 @@ public class World {
 			}
 			//execute all other moves
 			else if(this.gameMap.exploded()) {
-				for (GameMap thisMap : pastStates) {
-					
-				}
+				this.pastStates.clear();
+				this.pastStates.add(new GameMap(this.gameMap));
+				this.gameMap.explode();
 			}
 			else{
 				this.gameMap.update(input, delta);

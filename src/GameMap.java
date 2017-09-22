@@ -178,10 +178,15 @@ public class GameMap {
 	//change gameMap state to notify of an explosion
 	public void explode(int x, int y) {
 		removeSprite(this.gameMap[x][y].getTile());
-		//this.explosion = true;
+		this.explosion = true;
 		incrementNumMoves();
 		
 	}
+	
+	public void explode() {
+		this.explosion = false;
+	}
+	
 	public boolean exploded() {
 		return this.explosion;
 	}
