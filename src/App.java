@@ -1,11 +1,6 @@
-/**
- * Project skeleton for SWEN20003: Object Oriented Software Development 2017
- * by Eleanor McMurtry
- */
-//Adapted for use by Constantinos Kavadias for Project1, SWEN20003
+//Adapted for use by Constantinos Kavadias for Project2, SWEN20003
 //University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
-//August, 2017
-
+//September, 2017
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;

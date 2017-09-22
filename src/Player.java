@@ -1,6 +1,6 @@
-//Created by Constantinos Kavadias for Project1, SWEN20003
+//Created by Constantinos Kavadias for Project2, SWEN20003
 //University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
-//August, 2017
+//September, 2017
 
 import java.util.ArrayList;
 
@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
 @SuppressWarnings("unused")
 public class Player extends Unit{
 	private final static String IMAGE_SRC = "res/player_left.png";
-	private int numMoves = 0;
 
 	
 	public Player(int x, int y, int xOff, int yOff) 
@@ -21,7 +20,6 @@ public class Player extends Unit{
 	
 	public Player(Player thatSprite) throws Exception {
 		super(thatSprite);
-		this.numMoves = thatSprite.getNumMoves();
 	}
 	//respond to directional key input
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
@@ -41,16 +39,12 @@ public class Player extends Unit{
 		}
 	
 		if(moved) {
-			this.numMoves++;
 			gameMap.incrementNumMoves();
 		}
 	}
 	
 	public void render(Graphics g) throws SlickException {
 		super.render(g);
-	}
-	public int getNumMoves() {
-		return this.numMoves;
 	}
 	
 	@Override

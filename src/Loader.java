@@ -1,6 +1,6 @@
-//Adapted for use by Constantinos Kavadias for Project1, SWEN20003
+//Adapted for use by Constantinos Kavadias for Project2, SWEN20003
 //University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
-//August, 2017
+//September, 2017
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

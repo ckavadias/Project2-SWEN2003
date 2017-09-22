@@ -1,3 +1,7 @@
+//Created by Constantinos Kavadias for Project2, SWEN20003
+//University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
+//September, 2017
+
 import org.newdawn.slick.Input;
 
 public class Rogue extends Unit {
@@ -11,6 +15,7 @@ public class Rogue extends Unit {
 	
 	public Rogue(Rogue thatSprite) throws Exception{
 		super(thatSprite);
+		this.currentDirection = thatSprite.currentDirection;
 	}
 	
 	public Rogue copy() throws Exception{
@@ -24,7 +29,6 @@ public class Rogue extends Unit {
 			return;
 		}
 		if(!move(this.currentDirection, gameMap)){
-			//System.out.println("ROGUE");
 			switch (this.currentDirection) {
 				case LEFT:
 					this.currentDirection = GameObject.Direction.RIGHT;

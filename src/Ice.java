@@ -1,3 +1,7 @@
+//Created by Constantinos Kavadias for Project2, SWEN20003
+//University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
+//September, 2017
+
 import org.newdawn.slick.Input;
 
 public class Ice extends Block {
@@ -14,6 +18,9 @@ public class Ice extends Block {
 	
 	public Ice(Ice thatSprite) throws Exception{
 		super(thatSprite);
+		this.inMotion = thatSprite.inMotion;
+		this.currentDirection = thatSprite.currentDirection;
+		this.timeSinceSlide = thatSprite.timeSinceSlide;
 	}
 	
 	public Ice copy() throws Exception{

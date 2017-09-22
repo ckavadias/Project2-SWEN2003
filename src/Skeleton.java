@@ -1,3 +1,7 @@
+//Created by Constantinos Kavadias for Project2, SWEN20003
+//University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
+//September, 2017
+
 import org.newdawn.slick.Input;
 
 public class Skeleton extends Unit {
@@ -13,6 +17,8 @@ public class Skeleton extends Unit {
 	
 	public Skeleton(Skeleton thatSprite) throws Exception{
 		super(thatSprite);
+		this.timeSinceMove = thatSprite.timeSinceMove;
+		this.currentDirection = thatSprite.currentDirection;
 	}
 	
 	public Skeleton copy() throws Exception{

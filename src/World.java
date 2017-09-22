@@ -1,6 +1,6 @@
-//Adapted for use by Constantinos Kavadias for Project1, SWEN20003
+//Adapted for use by Constantinos Kavadias for Project2, SWEN20003
 //University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
-//August, 2017
+//September, 2017
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,7 +24,7 @@ public class World {
 				}
 			});
 	
-	private int currentLevel = 3;
+	private int currentLevel = 0;
 	private int numMoves = 0;
 	private Player player;
 	
@@ -38,7 +38,7 @@ public class World {
 	public void update(Input input, int delta) throws Exception {
 		if(this.currentLevel < MAX_LEVEL) {
 			//undo the most recent move
-			if(input.isKeyPressed(Input.KEY_U)) {
+			if(input.isKeyPressed(Input.KEY_Z)) {
 				undoMove();
 			}
 			//restart the level

@@ -1,5 +1,8 @@
-import java.util.ArrayList;
+//Created by Constantinos Kavadias for Project2, SWEN20003
+//University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
+//September, 2017
 
+import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -13,6 +16,7 @@ public class GameMap {
 	private boolean explosion = false;
 	private MapCell[][] gameMap;
 	private Door theDoor = null;
+	private Player thePlayer = null;
 	private ArrayList<Sprite> allSprites;
 	private ArrayList<Sprite> removalList = new ArrayList<Sprite>();
 	private ArrayList<Sprite> addList = new ArrayList<Sprite>();
@@ -52,6 +56,9 @@ public class GameMap {
 		}
 		else if (gameMap[x][y].getObject() instanceof Block) {
 			return Stopper.BLOCK;
+		}
+		else if (gameMap[x][y].getObject() instanceof Unit) {
+			return Stopper.UNIT;
 		}
 		else {
 			return Stopper.NO;
@@ -114,6 +121,9 @@ public class GameMap {
 			if(thisSprite instanceof Door) {
 				this.theDoor = (Door)thisSprite;
 			}
+			if(thisSprite instanceof Player) {
+				this.thePlayer = (Player)thisSprite;
+			}
 		}
 		this.numTargets = numTargets;
 	}
@@ -124,6 +134,9 @@ public class GameMap {
 	}
 	
 	//relay game updates to all sprites and also update list where necessary
+	//ArrayList cannot be updated during iteration due to concurrent update
+	//exceptions, due to this the removal and add list functionality was added
+	//to occur after iteration
 	public void update (Input input, float delta) throws Exception{
 		boolean change = false;
 		for(Sprite thisSprite : this.allSprites) {
@@ -141,7 +154,6 @@ public class GameMap {
 		}
 		//may need to refactor map where changes to the sprites have been made
 		if(change) {
-			System.out.println("REFACTOR");
 			initialiseMap(this.allSprites);
 			loadMap(this.allSprites);
 		}
@@ -214,5 +226,13 @@ public class GameMap {
 	
 	public void resetMove() {
 		this.moveMade = false;
+	}
+	
+	public int getPlayerX() {
+		return thePlayer.getX();
+	}
+	
+	public int getPlayerY() {
+		return thePlayer.getY();
 	}
 }

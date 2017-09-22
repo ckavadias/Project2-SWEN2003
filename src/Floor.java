@@ -1,3 +1,6 @@
+//Created by Constantinos Kavadias for Project2, SWEN20003
+//University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
+//September, 2017
 
 public class Floor extends Tile {
 	private final static String IMAGE_SRC = "res/floor.png";

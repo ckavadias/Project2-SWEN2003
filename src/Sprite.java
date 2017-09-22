@@ -1,6 +1,6 @@
-//Adapted for use by Constantinos Kavadias for Project1, SWEN20003
+//Adapted for use by Constantinos Kavadias for Project2, SWEN20003
 //University of Melbourne, Student ID 664790, ckavadias@student.unimelb.edu.au
-//August, 2017
+//September, 2017
 
 import org.newdawn.slick.Input;
 
@@ -34,12 +34,7 @@ public abstract class Sprite {
 		setY(thatSprite.getY());
 		setXOffset(thatSprite.getXOffset());
 		setYOffset(thatSprite.getYOffset());
-		this.spriteImage = thatSprite.getSpriteImage();
-	}
-	
-	private Image getSpriteImage() throws SlickException {
-		// TODO Auto-generated method stub
-		return new Image(this.spriteImage.getResourceReference());
+		this.spriteImage = thatSprite.spriteImage;
 	}
 
 	//takes x in game coordinates, confirms is within graphic boundary
