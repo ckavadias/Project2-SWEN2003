@@ -12,6 +12,7 @@ public class GameMap {
 	private boolean moveMade = false;
 	private boolean explosion = false;
 	private MapCell[][] gameMap;
+	private Door theDoor = null;
 	private ArrayList<Sprite> allSprites;
 	private ArrayList<Sprite> removalList = new ArrayList<Sprite>();
 	private ArrayList<Sprite> addList = new ArrayList<Sprite>();
@@ -57,6 +58,9 @@ public class GameMap {
 		}
 	}
 	
+	//places or removes a GameObject from a cell and activates other consequential actions
+	//note that it is guaranteed that where there is a switch there is also a door and there is
+	//only one of each so the possibility of passing a null to the turnOnOff method is eliminated
 	public void putInCell (int x, int y, Sprite object){
 		if (object instanceof Tile) {
 			gameMap[x][y].setTile((Tile)object);
@@ -68,6 +72,14 @@ public class GameMap {
 			}
 			if(object instanceof Block) {
 				incrementOnTarget();
+			}
+		}
+		else if (gameMap[x][y].getTile() instanceof Switch) {
+			if(object == null && gameMap[x][y].getObject() instanceof Block) {
+				((Switch)gameMap[x][y].getTile()).turnOnOff(theDoor);
+			}
+			if(object instanceof Block) {
+				((Switch)gameMap[x][y].getTile()).turnOnOff(theDoor);
 			}
 		}
 		gameMap[x][y].setObject((GameObject)object);
@@ -98,6 +110,9 @@ public class GameMap {
 			}
 			if (thisSprite instanceof Target) {
 				numTargets++;
+			}
+			if(thisSprite instanceof Door) {
+				this.theDoor = (Door)thisSprite;
 			}
 		}
 		this.numTargets = numTargets;

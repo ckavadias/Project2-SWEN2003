@@ -1,6 +1,7 @@
 
 public class Switch extends Tile {
 	private final static String IMAGE_SRC = "res/switch.png";
+	private boolean isOn = false;
 	
 	public Switch(int x, int y, int xOff, int yOff) throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
@@ -17,6 +18,11 @@ public class Switch extends Tile {
 	public boolean isBlocking() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void turnOnOff(Door theDoor) {
+		theDoor.openClose();
+		this.isOn = !this.isOn;
 	}
 
 }

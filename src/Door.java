@@ -1,7 +1,9 @@
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class Door extends Tile {
 	private final static String IMAGE_SRC = "res/door.png";
-	
+	private boolean isOpen = false;
 	public Door(int x, int y, int xOff, int yOff) throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
@@ -9,15 +11,26 @@ public class Door extends Tile {
 	
 	public Door(Door thatSprite) throws Exception{
 		super(thatSprite);
+		this.isOpen = !thatSprite.isBlocking();
 	}
 	
 	public Door copy() throws Exception{
 		return new Door(this);
 	}
+	
+	public void openClose() {
+		this.isOpen = !this.isOpen;
+	}
 	@Override
 	public boolean isBlocking() {
-		// TODO Auto-generated method stub
-		return false;
+		return !this.isOpen;
+	}
+	
+	public void render(Graphics g) throws SlickException {
+		if(this.isOpen) {
+			return;
+		}
+		super.render(g);
 	}
 
 }
