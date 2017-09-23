@@ -14,6 +14,7 @@ public class GameMap {
 	private int numMoves = 0;
 	private boolean moveMade = false;
 	private boolean explosion = false;
+	private boolean setup = true;
 	private MapCell[][] gameMap;
 	private Door theDoor = null;
 	private Player thePlayer = null;
@@ -26,6 +27,7 @@ public class GameMap {
 		initialiseMap(this.allSprites);
 		//insert all sprites into Map
 		loadMap(this.allSprites);
+		this.setup = false;
 	}
 	public GameMap(GameMap gameMap) throws Exception {
 		this.allSprites = new ArrayList<Sprite>();
@@ -44,6 +46,7 @@ public class GameMap {
 		
 		this.numMoves = gameMap.getNumMoves();
 		this.onTargets = gameMap.getOnTargets();
+		this.setup = false;
 	}
 	
 	//determine if and how a cell is blocked and communicate to calling class
@@ -73,7 +76,7 @@ public class GameMap {
 			gameMap[x][y].setTile((Tile)object);
 			return;
 		}
-		else if(gameMap[x][y].getTile() instanceof Target) {
+		else if(gameMap[x][y].getTile() instanceof Target && !this.setup) {
 			if(object == null && gameMap[x][y].getObject() instanceof Block) {
 				decrementOnTarget();
 			}
@@ -81,7 +84,7 @@ public class GameMap {
 				incrementOnTarget();
 			}
 		}
-		else if (gameMap[x][y].getTile() instanceof Switch) {
+		else if (gameMap[x][y].getTile() instanceof Switch && !this.setup) {
 			if(object == null && gameMap[x][y].getObject() instanceof Block) {
 				((Switch)gameMap[x][y].getTile()).turnOnOff(theDoor);
 			}
