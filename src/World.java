@@ -24,7 +24,7 @@ public class World {
 				}
 			});
 	
-	private int currentLevel = 2;
+	private int currentLevel = 0;
 	private int numMoves = 0;
 	private Player player;
 	
@@ -37,6 +37,10 @@ public class World {
 	
 	public void update(Input input, int delta) throws Exception {
 		if(this.currentLevel < MAX_LEVEL) {
+			
+			if(this.gameMap.unitContact()) {
+				restartLevel();
+			}
 			//undo the most recent move
 			if(input.isKeyPressed(Input.KEY_Z)) {
 				undoMove();

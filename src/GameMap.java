@@ -15,6 +15,7 @@ public class GameMap {
 	private boolean moveMade = false;
 	private boolean explosion = false;
 	private boolean setup = true;
+	private boolean unitContact = false;
 	private MapCell[][] gameMap;
 	private Door theDoor = null;
 	private Player thePlayer = null;
@@ -71,6 +72,8 @@ public class GameMap {
 	//places or removes a GameObject from a cell and activates other consequential actions
 	//note that it is guaranteed that where there is a switch there is also a door and there is
 	//only one of each so the possibility of passing a null to the turnOnOff method is eliminated
+	//null pointer exception may occur during copying of gameMap this was solved by using a 
+	//setup trigger
 	public void putInCell (int x, int y, Sprite object){
 		if (object instanceof Tile) {
 			gameMap[x][y].setTile((Tile)object);
@@ -237,5 +240,13 @@ public class GameMap {
 	
 	public int getPlayerY() {
 		return thePlayer.getY();
+	}
+	
+	public void unitContact(Unit unit, int x, int y) {
+		this.unitContact  = unit instanceof Player || gameMap[x][y].getObject() instanceof Player;
+	}
+	
+	public boolean unitContact() {
+		return this.unitContact;
 	}
 }

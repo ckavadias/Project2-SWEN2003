@@ -39,8 +39,11 @@ public abstract class Unit extends GameObject {
 		boolean isValid = false;
 		switch(gameMap.isCellBlocked(x,y)) {
 			case NO:
+				isValid = true;
+				break;
 			case UNIT:
 				isValid = true;
+				gameMap.unitContact(this, x, y);
 				break;
 			case BLOCK:
 				isValid = gameMap.pushBlock(x,y, direction);
