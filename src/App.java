@@ -21,7 +21,9 @@ public class App extends BasicGame
     public static final int SCREEN_HEIGHT = 600;
     /** size of the tiles, in pixels */
     public static final int TILE_SIZE = 32;
+    /** number of columns on screen of TILE_SIZE*/
     public static final int COLUMNS = SCREEN_WIDTH/TILE_SIZE;
+    /**number of rows on the screen of TILE_SIZE */
     public static final int ROWS = SCREEN_HEIGHT/TILE_SIZE;
     
     private World world;
@@ -53,6 +55,9 @@ public class App extends BasicGame
     {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
+        if(input.isKeyPressed(Input.KEY_ESCAPE)) {
+        		gc.exit();
+        }
         try {
 			world.update(input, delta);
 		} catch (Exception e) {

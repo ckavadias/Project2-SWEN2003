@@ -8,6 +8,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class GameMap {
+	/**
+	 * @author constantinoskavadias
+	 *
+	 */
+	/** Enum representing all possible forms of blocking in game */
 	public static enum Stopper {WALL, C_WALL, UNIT, BLOCK, NO};
 	private int onTargets = 0;
 	private int numTargets;
@@ -23,6 +28,9 @@ public class GameMap {
 	private ArrayList<Sprite> removalList = new ArrayList<Sprite>();
 	private ArrayList<Sprite> addList = new ArrayList<Sprite>();
 	
+	/**
+	 * @param allSprites list of sprites to be input on the gameMap
+	 */
 	public GameMap(ArrayList<Sprite> allSprites) {
 		this.allSprites = allSprites;
 		initialiseMap(this.allSprites);
@@ -30,6 +38,11 @@ public class GameMap {
 		loadMap(this.allSprites);
 		this.setup = false;
 	}
+	
+	/**
+	 * @param gameMap GameMap that needs to be copied
+	 * @throws Exception
+	 */
 	public GameMap(GameMap gameMap) throws Exception {
 		this.allSprites = new ArrayList<Sprite>();
 		
@@ -51,6 +64,11 @@ public class GameMap {
 	}
 	
 	//determine if and how a cell is blocked and communicate to calling class
+	/**
+	 * @param x the x location of the cell being checked
+	 * @param y the y location of the cell being checked
+	 * @return if/how the cell is blocked
+	 */
 	public Stopper isCellBlocked (int x, int y){
 		if(gameMap[x][y].getTile().isBlocking()) {
 			if(gameMap[x][y].getTile() instanceof CrackedWall) {
@@ -74,6 +92,12 @@ public class GameMap {
 	//only one of each so the possibility of passing a null to the turnOnOff method is eliminated
 	//null pointer exception may occur during copying of gameMap this was solved by using a 
 	//setup trigger
+	/**
+	 * places an object in a cell and activated consequential actions
+	 * @param x the x location of the cell in which we are inserting/removing
+	 * @param y the y location of the cell in which we are inserting/removing
+	 * @param object the object(possibly null) that we are inserting
+	 */
 	public void putInCell (int x, int y, Sprite object){
 		if (object instanceof Tile) {
 			gameMap[x][y].setTile((Tile)object);
@@ -113,7 +137,7 @@ public class GameMap {
 		}
 	}
 	
-	//insert all sprites into Map and count number of targets
+	//insert all sprites into Map and count number of targets, identify the player and door
 	private void loadMap(ArrayList<Sprite> allSprites) {
 		int numTargets = 0;
 		
@@ -135,6 +159,14 @@ public class GameMap {
 	}
 	
 	//allow a GameObject to relay a push command to a block
+	/**
+	 * pass a movement from one GameObject to another via the gameMap
+	 * @param x the x location of the desired cell
+	 * @param y the y location of the desired cell
+	 * @param direction the direction of the passed push
+	 * @return true if the push was successful, false otherwise
+	 * @throws Exception
+	 */
 	public boolean pushBlock(int x, int y, GameObject.Direction direction) throws Exception {
 		return ((Block)this.gameMap[x][y].getObject()).push(direction, this);
 	}
@@ -143,6 +175,14 @@ public class GameMap {
 	//ArrayList cannot be updated during iteration due to concurrent update
 	//exceptions, due to this the removal and add list functionality was added
 	//to occur after iteration
+	/**
+	 * pass the input and delta values to all sprites to use as necessary to update
+	 * their position and action in the game, also update the sprite list where
+	 * it has been requested a sprite is removed or added
+	 * @param input keyboard input as specified in the slick library
+	 * @param delta the number of miliseconds since last call
+	 * @throws Exception
+	 */
 	public void update (Input input, float delta) throws Exception{
 		boolean change = false;
 		for(Sprite thisSprite : this.allSprites) {
@@ -162,9 +202,16 @@ public class GameMap {
 		if(change) {
 			initialiseMap(this.allSprites);
 			loadMap(this.allSprites);
+			change = false;
 		}
 	}
 	
+	/**
+	 * call render on all Sprites currently in the Sprite list in order
+	 * to render the game board
+	 * @param g the graphics as specified in the slick library
+	 * @throws SlickException
+	 */
 	public void render(Graphics g) throws SlickException {
 		for (Sprite thisSprite : this.allSprites) {
 			thisSprite.render(g);
@@ -184,33 +231,56 @@ public class GameMap {
 		return this.onTargets;
 	}
 	
+	/**
+	 * Increment the number of moves made in the game, called by player
+	 */
 	public void incrementNumMoves() {
 		this.moveMade = true;
 		this.numMoves++;
 	} 
 	
 	//determine if all targets have been covered
+	/**
+	 * Determine if the level has reached a win state (All targets covered)
+	 * @return true if in win state, false otherwise
+	 */
 	public boolean winState() {
 		return this.numTargets == this.onTargets;
 	}
 
+	/**
+	 * @return the number of moves made
+	 */
 	public int getNumMoves() {
 		return this.numMoves;
 	}
 	
 	//list a sprite for removal during next update run
+	/**
+	 * Add a sprite to a list for removal at the next update call
+	 * @param thisSprite the calling sprite requesting to be removed
+	 */
 	public void removeSprite(Sprite thisSprite) {
 		this.removalList.add(thisSprite);
 		
 	}
 	
 	//list a sprite for addition during the next update run
+	/**
+	 * Add a sprite to a list for addition at the next update call
+	 * @param thisSprite the calling sprite requesting to be added
+	 */
 	public void addSprite(Sprite thisSprite) {
 		this.addList.add(thisSprite);
 		
 	}
 	
 	//change gameMap state to notify of an explosion
+	/**
+	 * Activate the explosion tag and remove the CrackedWall at the specified tile
+	 * @param x the cell in which the explosion will occur
+	 * @param y the cell in which the explosion will occur
+	 */
 	public void explode(int x, int y) {
 		removeSprite(this.gameMap[x][y].getTile());
 		this.explosion = true;
@@ -218,34 +288,64 @@ public class GameMap {
 		
 	}
 	
+	/**
+	 *  set the explosion tag to false following an explosion
+	 */
 	public void explode() {
 		this.explosion = false;
 	}
 	
+	/**
+	 * @return whether an explosion has occurred
+	 */
 	public boolean exploded() {
 		return this.explosion;
 	}
 	
+	/**
+	 * @return whether a move was made at the last update call
+	 */
 	public boolean moveWasMade() {
 		return this.moveMade;
 	}
 	
+	/**
+	 * reset moveMade tag to false at teh start of the next move cycle
+	 */
 	public void resetMove() {
 		this.moveMade = false;
 	}
 	
+	/**
+	 * @return the x coordinate of the player
+	 */
 	public int getPlayerX() {
 		return thePlayer.getX();
 	}
 	
+	/**
+	 * @return the y coordinate of the player
+	 */
 	public int getPlayerY() {
 		return thePlayer.getY();
 	}
 	
+	//determine if the player has come in contact with another unit
+	/**
+	 * Set a unit contact tag based on whether the current unit is a player or
+	 * the desired square is a player
+	 * Is only ever called by a unit when they get Stopper.UNIT as a return on isBlocked
+	 * @param unit the unit calling
+	 * @param x the x coordinate the unit is wanting to move to
+	 * @param y the y coordinate the unit is wanting to move to
+	 */
 	public void unitContact(Unit unit, int x, int y) {
 		this.unitContact  = unit instanceof Player || gameMap[x][y].getObject() instanceof Player;
 	}
 	
+	/**
+	 * @return whether or not unit contact has been flagged
+	 */
 	public boolean unitContact() {
 		return this.unitContact;
 	}

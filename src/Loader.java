@@ -12,27 +12,43 @@ import org.newdawn.slick.SlickException;
 
 @SuppressWarnings("unused")
 public class Loader {
+	/** filename designation for the Player class */
 	public static final String PLAYER = "PLAYER";
+	/** filename designation for the Skeleton class */
 	public static final String SKELETON = "SKELETON";
+	/** filename designation for the Rogue class */
 	public static final String ROGUE = "ROGUE";
+	/** filename designation for the Mage class */
 	public static final String MAGE = "MAGE";
+	/** filename designation for the Stone class */
 	public static final String STONE = "STONE";
+	/** filename designation for the Ice class */
 	public static final String ICE = "ICE";
+	/** filename designation for the TNT class */
 	public static final String TNT = "TNT";
+	/** filename designation for the Door class */
 	public static final String DOOR = "DOOR";
+	/** filename designation for the Switch class */
 	public static final String SWITCH = "SWITCH";
+	/** filename designation for the Floor class */
 	public static final String FLOOR = "FLOOR";
+	/** filename designation for the Wall class */
 	public static final String WALL = "WALL";
+	/** filename designation for the CrackedWall class */
 	public static final String C_WALL = "CRACKED";
+	/** filename designation for the Target class */
 	public static final String TARGET = "TARGET";
+	/**location of filename in comma split array*/
 	public static final int FILE = 0;
+	/**location of initial x coordinate in comma split array*/
 	public static final int X = 1;
+	/**location of initial y coordinate in comma split array*/
 	public static final int Y = 2;
 	
 	/**
 	 * Loads the sprites from a given file.
-	 * @param filename
-	 * @return
+	 * @param filename the file from which the sprites are loaded
+	 * @return returns a completed ArrayList of sprites
 	 * @throws Exception 
 	 */
 	public static ArrayList<Sprite> loadSprites(String filename) throws Exception {

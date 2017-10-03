@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 
 @SuppressWarnings("unused")
 public class World {	
+	
 	private final int MAX_LEVEL = 5;
 	private final String DIR = "res/levels/";
 	private final String EXT = ".lvl";
@@ -29,12 +30,24 @@ public class World {
 	private Player player;
 	
 	//loads in all sprites available from the level while also creating 
+	/**
+	 * Constructor
+	 * @throws Exception
+	 */
 	public World() throws Exception {
 		//initialise gameMap from loaded sprites
 		this.initialMap = new GameMap(loadLevel());
 		restartLevel();
 	}
 	
+	
+	/**
+	 * Communicate update information to the gameMap for diffusion to Sprites
+	 * Checks if a restart or undo has been requested and implements
+	 * @param input input as dictated by the slick library
+	 * @param delta number of miliseconds since last call to update
+	 * @throws Exception
+	 */
 	public void update(Input input, int delta) throws Exception {
 		if(this.currentLevel < MAX_LEVEL) {
 			
@@ -62,6 +75,11 @@ public class World {
 		}
 	}
 	
+	/**
+	 * Checks for win state and also calls to the gameMap to render the sprites
+	 * @param g Graphics as dictated by the slick library
+	 * @throws Exception
+	 */
 	public void render(Graphics g) throws Exception {
 		gameMap.render(g);
 		if(gameMap.winState() && currentLevel < MAX_LEVEL) {

@@ -6,6 +6,11 @@ public class MapCell {
 	private GameObject object;
 	private Tile tile;
 	
+	/**
+	 * Constructor
+	 * starts with null tile and object
+	 * 
+	 */
 	public MapCell() {
 		// TODO Auto-generated constructor stub
 		this.setObject(null);
@@ -13,6 +18,7 @@ public class MapCell {
 	}
 
 	/**
+	 * Getter for the object stored in the cell
 	 * @return the object
 	 */
 	public GameObject getObject() {
@@ -20,6 +26,7 @@ public class MapCell {
 	}
 
 	/**
+	 * Setter for the object stored in the cell
 	 * @param object the object to set
 	 */
 	public void setObject(GameObject object) {
@@ -27,6 +34,7 @@ public class MapCell {
 	}
 
 	/**
+	 * Getter for the tile stored in the cell
 	 * @return the tile
 	 */
 	public Tile getTile() {
@@ -34,6 +42,7 @@ public class MapCell {
 	}
 
 	/**
+	 * Setter for the tile stored in the cell
 	 * @param tile the tile to set
 	 */
 	public void setTile(Tile tile) {

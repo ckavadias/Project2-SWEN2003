@@ -8,12 +8,24 @@ public class Mage extends Unit {
 	private final static String IMAGE_SRC = "res/mage.png";
 	private final static int POS = 1;
 	private final static int NEG = -1;
-	
+	/**
+	 * Constructor
+	 * @param x initial x coordinate in game coordinate format
+	 * @param y initial y coordinate in game coordinate format
+	 * @param xOff horizontal offset from edge of screen
+	 * @param yOff vertical offset from edge of screen
+	 * @throws Exception
+	 */
 	public Mage(int x, int y, int xOff, int yOff) throws Exception {
 		super(IMAGE_SRC, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Copy Constructor
+	 * @param thatSprite Mage that is being copied
+	 * @throws Exception
+	 */
 	public Mage(Mage thatSprite) throws Exception{
 		super(thatSprite);
 	}
@@ -22,6 +34,9 @@ public class Mage extends Unit {
 		return new Mage(this);
 	}
 	
+	/* (non-Javadoc)
+	 * @see Sprite#update(org.newdawn.slick.Input, float, GameMap)
+	 */
 	@Override
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		if(!gameMap.moveWasMade()) {

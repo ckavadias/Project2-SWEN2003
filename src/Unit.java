@@ -7,15 +7,37 @@ import org.newdawn.slick.Input;
 
 public abstract class Unit extends GameObject {
 	
+	/**
+	 * Constructor
+	 * @param image_src the file path for the image
+	 * @param x initial x coordinate in game coordinate format
+	 * @param y initial y coordinate in game coordinate format
+	 * @param xOff horizontal offset from edge of screen
+	 * @param yOff vertical offset from edge of screen
+	 * @throws Exception
+	 */
 	public Unit(String image_src, int x, int y, int xOff, int yOff) throws Exception {
 		super(image_src, x, y, xOff, yOff);
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Copy Constructor
+	 * @param thatSprite Unit that is being copied
+	 * @throws Exception
+	 */
 	public Unit(Unit thatSprite) throws Exception {
 		super(thatSprite);
 	}
 	
+	
+	/**
+	 * Attempts to make the specified move and returns whether it's possible or not
+	 * @param direction direction in which the Unit is moving
+	 * @param gameMap the current game state in which the move is being made
+	 * @return returns true if move is possible, false otherwise
+	 * @throws Exception
+	 */
 	public boolean move(Direction direction, GameMap gameMap) throws Exception {
 		int newX = 0, newY = 0;
 		
@@ -35,6 +57,9 @@ public abstract class Unit extends GameObject {
 	
 	//check that the proposed move is valid given the game state and propagate
 	//to other gameObjects where needed
+	/* (non-Javadoc)
+	 * @see GameObject#isValidMove(int, int, GameObject.Direction, GameMap)
+	 */
 	public boolean isValidMove(int x, int y,Direction direction, GameMap gameMap) throws Exception {
 		boolean isValid = false;
 		switch(gameMap.isCellBlocked(x,y)) {

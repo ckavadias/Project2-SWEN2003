@@ -18,7 +18,7 @@ public abstract class Sprite {
 	private int xOffset;
 	private int yOffset;
 	
-	//takes image_src, x, y from Loader and converts x and y into pixels
+	//takes image_src, x, y from Loader where x and y are game coordinates
 	//also takes a graphical offset to centre rendering 
 	public Sprite(String image_src, int x, int y, int xOff, int yOff) 
 			throws Exception {
@@ -39,7 +39,7 @@ public abstract class Sprite {
 
 	//takes x in game coordinates, confirms is within graphic boundary
 	protected void setX (int x) throws Exception {  
-		if(x + getXOffset() < getXOffset() || x > App.COLUMNS - getXOffset()+1) {
+		if(x  < 0 || x > App.COLUMNS - getXOffset()+1) {
 			throw new Exception("Invalid grid value");
 		}
 		else {
@@ -49,7 +49,7 @@ public abstract class Sprite {
 	
 	//takes y in game coordinates, confirms is within graphic boundary
 	protected void setY(int y) throws Exception {
-		if(y + getYOffset() < getYOffset() ||  y > App.ROWS - getYOffset() +1) {
+		if(y  < 0 ||  y > App.ROWS - getYOffset() +1) {
 			throw new Exception("Invalid grid value");
 		}
 		else {
@@ -87,19 +87,6 @@ public abstract class Sprite {
 	
 	public int getYScreen() {
 		return (this.y+this.yOffset)*App.TILE_SIZE;
-	}
-	//this has been included in the Sprite class as expansions of the game in which
-	//blocks can be move will require this functionality in more than just the player
-	public boolean isCloseTo(Sprite otherSprite) {
-		float distX = Math.abs(getX() - otherSprite.getX())*App.TILE_SIZE;
-		float distY = Math.abs(getY() - otherSprite.getY())*App.TILE_SIZE;
-		
-		//if these conditions are met the tiles have crossed over and is Close
-		if (distX < App.TILE_SIZE && distY < App.TILE_SIZE) {
-			return true;
-		}
-		
-		return false;
 	}
 	
 	public void render(Graphics g) throws SlickException {
