@@ -45,7 +45,7 @@ public class World {
 	 * Communicate update information to the gameMap for diffusion to Sprites
 	 * Checks if a restart or undo has been requested and implements
 	 * @param input input as dictated by the slick library
-	 * @param delta number of miliseconds since last call to update
+	 * @param delta number of milliseconds since last call to update
 	 * @throws Exception
 	 */
 	public void update(Input input, int delta) throws Exception {

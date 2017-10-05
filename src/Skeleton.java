@@ -49,6 +49,7 @@ public class Skeleton extends Unit {
 	public void update(Input input, float delta, GameMap gameMap) throws Exception {
 		//determine if a second has passed, knowing that delta is measured in milliseconds since last 
 		//call to update
+		gameMap.unitContact(this);
 		this.timeSinceMove+=delta;
 		
 		if(this.timeSinceMove >= SECOND){

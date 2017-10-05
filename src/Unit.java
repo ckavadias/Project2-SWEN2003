@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import org.newdawn.slick.Input;
 
 public abstract class Unit extends GameObject {
-	
+	private int lastX = 0;
+	private int lastY = 0;
 	/**
 	 * Constructor
 	 * @param image_src the file path for the image
@@ -18,6 +19,8 @@ public abstract class Unit extends GameObject {
 	 */
 	public Unit(String image_src, int x, int y, int xOff, int yOff) throws Exception {
 		super(image_src, x, y, xOff, yOff);
+		setLastX(x);
+		setLastY(y);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -30,6 +33,21 @@ public abstract class Unit extends GameObject {
 		super(thatSprite);
 	}
 	
+	private void setLastY(int y) {
+		this.lastY = y;	
+	}
+
+	private void setLastX(int x) {
+		this.lastX = x;	
+	}
+	
+	public int getLastX() {
+		return this.lastX;
+	}
+	
+	public int getLastY() {
+		return this.lastY;
+	}
 	
 	/**
 	 * Attempts to make the specified move and returns whether it's possible or not
@@ -47,9 +65,12 @@ public abstract class Unit extends GameObject {
 		
 		if (isValidMove(newX,newY,direction, gameMap)) {
 			gameMap.putInCell(getX(), getY(), (GameObject)null);
+			setLastX(getX());
+			setLastY(getY());
 			setX(newX);
 			setY(newY);
 			gameMap.putInCell(newX, newY, this);
+			gameMap.unitContact(this);
 			return true;
 		}
 		return false;
@@ -68,7 +89,6 @@ public abstract class Unit extends GameObject {
 				break;
 			case UNIT:
 				isValid = true;
-				gameMap.unitContact(this, x, y);
 				break;
 			case BLOCK:
 				isValid = gameMap.pushBlock(x,y, direction);

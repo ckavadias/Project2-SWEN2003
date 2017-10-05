@@ -332,15 +332,31 @@ public class GameMap {
 	
 	//determine if the player has come in contact with another unit
 	/**
-	 * Set a unit contact tag based on whether the current unit is a player or
-	 * the desired square is a player
-	 * Is only ever called by a unit when they get Stopper.UNIT as a return on isBlocked
+	 * Set a unit contact tag based on whether the current unit has passed through
+	 * a player or occupies the same square as a player
+	 * This is called after every successful move by a unit to check.
 	 * @param unit the unit calling
-	 * @param x the x coordinate the unit is wanting to move to
-	 * @param y the y coordinate the unit is wanting to move to
 	 */
-	public void unitContact(Unit unit, int x, int y) {
-		this.unitContact  = unit instanceof Player || gameMap[x][y].getObject() instanceof Player;
+	public void unitContact(Unit unit) {
+		//only checking consequences of unit action, the player will be checked as a result
+		//and does not need to be independently checked
+		if (!(unit instanceof Player)) {
+			
+			//intended position of unit is the same as the last position of the player
+			if(unit.getX() == this.thePlayer.getLastX() && unit.getY() == this.thePlayer.getLastY()) {
+				//what will be last position of the unit is the same as the player's current
+				//this means they have passed through each other, implying contact
+				if(unit.getLastX() == this.thePlayer.getX() && unit.getLastY() == this.thePlayer.getY()) {
+					this.unitContact = true;
+				}
+			}
+			
+			//intended position of the unit is the same as the current position of the player
+			//this is an obvious cooccupation 
+			if(unit.getX() == this.thePlayer.getX() && unit.getY() == this.thePlayer.getY()) {
+				this.unitContact = true;
+			}
+		}
 	}
 	
 	/**
