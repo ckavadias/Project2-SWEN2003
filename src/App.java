@@ -4,9 +4,13 @@
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.Input;
 
 /**
@@ -25,8 +29,10 @@ public class App extends BasicGame
     public static final int COLUMNS = SCREEN_WIDTH/TILE_SIZE;
     /**number of rows on the screen of TILE_SIZE */
     public static final int ROWS = SCREEN_HEIGHT/TILE_SIZE;
-    
+    private TextField requestName;
+    private boolean start = true;
     private World world;
+    private User theUser;
 
     public App()
     {    	
@@ -39,6 +45,12 @@ public class App extends BasicGame
     {
     	try {
 			world = new World();
+			TrueTypeFont trueTypeFont = 
+					new TrueTypeFont(new java.awt.Font("Arial" , java.awt.Font.PLAIN , 16), false);
+			
+			requestName = new TextField(gc,trueTypeFont,
+					SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 5*TILE_SIZE, TILE_SIZE);
+			requestName.setTextColor(Color.white);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,6 +67,13 @@ public class App extends BasicGame
     {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
+        if(start && input.isKeyPressed(Input.KEY_ENTER)) {
+        		this.theUser = Loader.loadUser(requestName.getText());
+        		this.start = false;
+        }
+        if(!start) {
+        	this.theUser.incrementScore(delta);
+        }
         if(input.isKeyPressed(Input.KEY_ESCAPE)) {
         		gc.exit();
         }
@@ -73,8 +92,16 @@ public class App extends BasicGame
     public void render(GameContainer gc, Graphics g)
     throws SlickException
     {
+    	if(start) {
+    		g.setColor(Color.white);
+    		g.drawString("Enter username: ", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - TILE_SIZE);
+    		requestName.render(gc, g);
+    		requestName.setFocus(true);
+    		return;
+    	}
     	try {
 			world.render(g);
+			this.theUser.render(g);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

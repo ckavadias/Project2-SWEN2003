@@ -25,7 +25,7 @@ public class World {
 				}
 			});
 	
-	private int currentLevel = 0;
+	private int currentLevel = 2;
 	private int numMoves = 0;
 	private Player player;
 	

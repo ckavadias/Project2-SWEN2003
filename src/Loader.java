@@ -44,6 +44,8 @@ public class Loader {
 	public static final int X = 1;
 	/**location of initial y coordinate in comma split array*/
 	public static final int Y = 2;
+	/** file where ongoing user and score information stored */
+	public static final String USER_FILE = "users.txt";
 	
 	/**
 	 * Loads the sprites from a given file.
@@ -135,5 +137,38 @@ public class Loader {
 		
 		allSprites.trimToSize();
 		return allSprites;
+	}
+	
+	public static User loadUser(String name){
+		User thisUser = null;
+		boolean found = false;
+		
+		try {
+			BufferedReader userFile = new BufferedReader(new FileReader(USER_FILE));
+			String nextLine;
+			
+			try {				
+				while ((nextLine = userFile.readLine()) != null) {
+					String[] userInfo = nextLine.split(",");
+					
+					if(userInfo[FILE].equals(name)) {
+						double highScore = Double.parseDouble(userInfo[X]);
+						thisUser = new User(userInfo[FILE], highScore);
+						found = true;
+						break;
+					}
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		if(!found) {
+			thisUser = new User(name, 0);
+		}
+		return thisUser;
 	}
 }
